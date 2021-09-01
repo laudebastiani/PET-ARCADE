@@ -37,7 +37,13 @@ lista_cobra = []
 comprimento_inicial = 5
 morreu = False
 
-#imagens=["logosite.png", "gears.png", "calculus2.png", "calculus.png", "lightning.png", "calculus.png", "magnet.png", "trend.png"]
+imagens=["lightning.png", "gears.png", "calculus2.png", "calculus.png", "atom.png", "magnet.png", "motherboard.png", "coding.png", "graduation.png", "logosite.png"]
+i=0
+imagem1=pygame.image.load("lightning.png")
+imagem1= pygame.transform.scale(imagem1, (40, 40))
+maça=pygame.image.load(imagens[i])
+maça=pygame.transform.scale(maça, (40,40))
+
 
 def aumenta_cobra(lista_cobra):
     for XeY in lista_cobra:
@@ -45,7 +51,7 @@ def aumenta_cobra(lista_cobra):
         #XeY[0] = x
         #XeY[1] = y
 
-        pygame.draw.rect(tela, (255,255,0), (XeY[0], XeY[1], 20, 20))
+        pygame.draw.rect(tela, (0,255,0), (XeY[0], XeY[1], 20, 20))
 
 def reiniciar_jogo():
     global pontos, comprimento_inicial, x_cobra, y_cobra, lista_cobra, lista_cabeca, x_maca, y_maca, morreu
@@ -62,14 +68,9 @@ def reiniciar_jogo():
 while True:
     relogio.tick(30)
     tela.fill((0,0,0))
-    ''' Troca de imagens
-    i=0
-    imagem=pygame.image.load(imagens[i])
-    tela.blit(imagem,(50,30))
-    '''
     
     mensagem = f'Pontos: {pontos}'
-    recorde = f'Maior: {record}'
+    recorde = f'Record: {record}'
     texto_formatado = fonte.render(mensagem, True, (255,255,0))
     texto2 = fonte.render(recorde,True, (0,0,255))
     
@@ -108,7 +109,8 @@ while True:
     y_cobra = y_cobra + y_controle
         
     cobra = pygame.draw.rect(tela, (255,255,0), (x_cobra,y_cobra,20,20))
-    maca = pygame.draw.rect(tela, (255,0,0), (x_maca,y_maca,20,20))
+    maca = pygame.draw.rect(tela, (0,0,0), (x_maca,y_maca,25,25))
+    tela.blit(maça, (x_maca-7,y_maca-10))
     borda1 = pygame.draw.rect(tela, (255, 0 , 0), (0,0,640,5))
     borda2 = pygame.draw.rect(tela, (255, 0 , 0), (635,0,5,480))
     borda3 = pygame.draw.rect(tela, (255, 0 , 0), (0,475,640,5))
@@ -119,8 +121,14 @@ while True:
         y_maca = randint(50, 430)
         pontos += 1
         barulho_colisao.play()
+        i+=1
         comprimento_inicial = comprimento_inicial + 1
         velocidade+=0.25
+        maça=pygame.image.load(imagens[i])
+        maça=pygame.transform.scale(maça, (40,40))
+        retmaça=maça.get_rect()
+        if i==9:
+            i=-1
     
     if pontos>record:
         record=pontos
