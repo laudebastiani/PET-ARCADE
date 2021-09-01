@@ -6,14 +6,14 @@ from random import randint
 
 pygame.init()
 
-pygame.mixer.music.set_volume(0.1)
+pygame.mixer.music.set_volume(0.05)
 musica_de_fundo = pygame.mixer.music.load('musica1.wav')
 pygame.mixer.music.play(-1)
 
 barulho_colisao = pygame.mixer.Sound('coin.wav')
-
-largura = 640
-altura = 480
+barulho_perdeu = pygame.mixer.Sound('fireball.wav')
+largura = 600
+altura = 600
 
 x_cobra = int(largura/2) 
 y_cobra = int(altura/2)
@@ -61,8 +61,8 @@ def reiniciar_jogo():
     y_cobra = int(altura/2)
     lista_cobra = []
     lista_cabeca = []
-    x_maca = randint(40, 600)
-    y_maca = randint(50, 430)
+    x_maca = randint(50, 600)
+    y_maca = randint(170, 600)
     morreu = False
 
 while True:
@@ -111,14 +111,14 @@ while True:
     cobra = pygame.draw.rect(tela, (255,255,0), (x_cobra,y_cobra,20,20))
     maca = pygame.draw.rect(tela, (0,0,0), (x_maca,y_maca,25,25))
     tela.blit(maça, (x_maca-7,y_maca-10))
-    borda1 = pygame.draw.rect(tela, (255, 0 , 0), (0,0,640,5))
-    borda2 = pygame.draw.rect(tela, (255, 0 , 0), (635,0,5,480))
-    borda3 = pygame.draw.rect(tela, (255, 0 , 0), (0,475,640,5))
-    borda4 = pygame.draw.rect(tela, (255, 0 , 0), (0,0,5,480))
+    borda1 = pygame.draw.rect(tela, (255, 0 , 0), (0,120,600,5))
+    borda2 = pygame.draw.rect(tela, (255, 0 , 0), (595,120,5,480))
+    borda3 = pygame.draw.rect(tela, (255, 0 , 0), (0,595,600,5))
+    borda4 = pygame.draw.rect(tela, (255, 0 , 0), (0,120,5,475))
     
     if cobra.colliderect(maca):
-        x_maca = randint(40, 600)
-        y_maca = randint(50, 430)
+        x_maca = randint(50, 550)
+        y_maca = randint(170, 550)
         pontos += 1
         barulho_colisao.play()
         i+=1
@@ -140,14 +140,17 @@ while True:
     lista_cobra.append(lista_cabeca)
 
     if (lista_cobra.count(lista_cabeca) > 1) or cobra.colliderect(borda1) or cobra.colliderect(borda2) or cobra.colliderect(borda3) or cobra.colliderect(borda4):
+        barulho_perdeu.play()
         mensagem = 'Game over! Pressione a tecla R para jogar novamente.'
         texto_formatado = fonte2.render(mensagem, True, (255,255,0))
-        ret_texto = texto_formatado.get_rect()
+        ret_texto = texto_formatado.get_rect() 
+        i==0 
         
         morreu = True
         while morreu:
             tela.fill((0,0,0))
             velocidade=10
+
             for event in pygame.event.get():
                 if event.type == QUIT:
                     pygame.quit()
@@ -155,6 +158,7 @@ while True:
                 if event.type == KEYDOWN:
                     if event.key == K_r:                       
                         reiniciar_jogo()
+                        
                         
                       
 
@@ -177,8 +181,8 @@ while True:
 
     aumenta_cobra(lista_cobra)
 
-    tela.blit(texto_formatado, (400,40))
-    tela.blit(texto2, (400,100))
+    tela.blit(texto_formatado, (70,50))
+    tela.blit(texto2, (300,50))
 
 
     
