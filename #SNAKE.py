@@ -26,7 +26,9 @@ x_maca = randint(40, 600)
 y_maca = randint(50, 430)
 
 pontos = 0
-fonte = pygame.font.SysFont('arial', 40, bold=True, italic=True)
+record = 0
+fonte = pygame.font.Font('ka1.ttf', 30, bold=True, italic=True)
+fonte2 = pygame.font.SysFont('arial', 20, True, True)
 
 tela = pygame.display.set_mode((largura, altura))
 pygame.display.set_caption('Jogo')
@@ -34,6 +36,8 @@ relogio = pygame.time.Clock()
 lista_cobra = []
 comprimento_inicial = 5
 morreu = False
+
+#imagens=["logosite.png", "gears.png", "calculus2.png", "calculus.png", "lightning.png", "calculus.png", "magnet.png", "trend.png"]
 
 def aumenta_cobra(lista_cobra):
     for XeY in lista_cobra:
@@ -58,9 +62,16 @@ def reiniciar_jogo():
 while True:
     relogio.tick(30)
     tela.fill((0,0,0))
+    ''' Troca de imagens
+    i=0
+    imagem=pygame.image.load(imagens[i])
+    tela.blit(imagem,(50,30))
+    '''
     
     mensagem = f'Pontos: {pontos}'
+    recorde = f'Maior: {record}'
     texto_formatado = fonte.render(mensagem, True, (255,255,0))
+    texto2 = fonte.render(recorde,True, (0,0,255))
     
     for event in pygame.event.get():
         if event.type == QUIT:
@@ -68,25 +79,25 @@ while True:
             exit()
         
         if event.type == KEYDOWN:
-            if event.key == K_a:
+            if event.key == K_LEFT:
                 if x_controle == velocidade:
                     pass
                 else:
                     x_controle = -velocidade
                     y_controle = 0
-            if event.key == K_d:
+            if event.key == K_RIGHT:
                 if x_controle == -velocidade:
                     pass
                 else:
                     x_controle = velocidade
                     y_controle = 0
-            if event.key == K_w:
+            if event.key == K_UP:
                 if y_controle == velocidade:
                     pass
                 else:
                     y_controle = -velocidade
                     x_controle = 0
-            if event.key == K_s:
+            if event.key == K_DOWN:
                 if y_controle == -velocidade:
                     pass
                 else:
@@ -98,6 +109,10 @@ while True:
         
     cobra = pygame.draw.rect(tela, (255,255,0), (x_cobra,y_cobra,20,20))
     maca = pygame.draw.rect(tela, (255,0,0), (x_maca,y_maca,20,20))
+    borda1 = pygame.draw.rect(tela, (255, 0 , 0), (0,0,640,5))
+    borda2 = pygame.draw.rect(tela, (255, 0 , 0), (635,0,5,480))
+    borda3 = pygame.draw.rect(tela, (255, 0 , 0), (0,475,640,5))
+    borda4 = pygame.draw.rect(tela, (255, 0 , 0), (0,0,5,480))
     
     if cobra.colliderect(maca):
         x_maca = randint(40, 600)
@@ -106,30 +121,34 @@ while True:
         barulho_colisao.play()
         comprimento_inicial = comprimento_inicial + 1
         velocidade+=0.25
-
+    
+    if pontos>record:
+        record=pontos
+    
     lista_cabeca = []
     lista_cabeca.append(x_cobra)
     lista_cabeca.append(y_cobra)
     
     lista_cobra.append(lista_cabeca)
 
-    if (lista_cobra.count(lista_cabeca) > 1):
-        fonte2 = pygame.font.SysFont('arial', 20, True, True)
+    if (lista_cobra.count(lista_cabeca) > 1) or cobra.colliderect(borda1) or cobra.colliderect(borda2) or cobra.colliderect(borda3) or cobra.colliderect(borda4):
         mensagem = 'Game over! Pressione a tecla R para jogar novamente.'
         texto_formatado = fonte2.render(mensagem, True, (255,255,0))
         ret_texto = texto_formatado.get_rect()
         
-
         morreu = True
         while morreu:
             tela.fill((0,0,0))
+            velocidade=10
             for event in pygame.event.get():
                 if event.type == QUIT:
                     pygame.quit()
                     exit()
                 if event.type == KEYDOWN:
-                    if event.key == K_r:
+                    if event.key == K_r:                       
                         reiniciar_jogo()
+                        
+                      
 
             ret_texto.center = (largura//2, altura//2) 
             tela.blit(texto_formatado, ret_texto)
@@ -150,7 +169,9 @@ while True:
 
     aumenta_cobra(lista_cobra)
 
-    tela.blit(texto_formatado, (450,40))
+    tela.blit(texto_formatado, (400,40))
+    tela.blit(texto2, (400,100))
+
 
     
     pygame.display.update()
