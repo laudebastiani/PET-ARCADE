@@ -22,12 +22,12 @@ velocidade = 10
 x_controle = velocidade
 y_controle = 0
 
-x_maca = randint(40, 600)
-y_maca = randint(50, 430)
+x_maca = randint(40, 520)
+y_maca = randint(170, 520)
 
 pontos = 0
 record = 0
-fonte = pygame.font.Font('ka1.ttf', 30, bold=True, italic=True)
+fonte = pygame.font.Font('ka1.ttf', 25, bold=True, italic=True)
 fonte2 = pygame.font.SysFont('arial', 20, True, True)
 
 tela = pygame.display.set_mode((largura, altura))
@@ -44,6 +44,10 @@ imagem1= pygame.transform.scale(imagem1, (40, 40))
 maça=pygame.image.load(imagens[i])
 maça=pygame.transform.scale(maça, (40,40))
 
+banner=pygame.image.load("banner.png")
+banner=pygame.transform.scale(banner, (600,120))
+grama=pygame.image.load("grama.png")
+grama=pygame.transform.scale(grama, (600,480))
 
 def aumenta_cobra(lista_cobra):
     for XeY in lista_cobra:
@@ -51,7 +55,7 @@ def aumenta_cobra(lista_cobra):
         #XeY[0] = x
         #XeY[1] = y
 
-        pygame.draw.rect(tela, (0,255,0), (XeY[0], XeY[1], 20, 20))
+        pygame.draw.rect(tela, (180,90,0), (XeY[0], XeY[1], 20, 20))
 
 def reiniciar_jogo():
     global pontos, comprimento_inicial, x_cobra, y_cobra, lista_cobra, lista_cabeca, x_maca, y_maca, morreu
@@ -61,17 +65,27 @@ def reiniciar_jogo():
     y_cobra = int(altura/2)
     lista_cobra = []
     lista_cabeca = []
-    x_maca = randint(50, 600)
-    y_maca = randint(170, 600)
+    x_maca = randint(50, 520)
+    y_maca = randint(170, 520)
     morreu = False
 
 while True:
     relogio.tick(30)
     tela.fill((0,0,0))
+
+    tela.blit(banner, (0,0))
     
-    mensagem = f'Pontos: {pontos}'
-    recorde = f'Record: {record}'
-    texto_formatado = fonte.render(mensagem, True, (255,255,0))
+    borda1 = pygame.draw.rect(tela, (255, 0 , 0), (0,120,600,5))
+    borda2 = pygame.draw.rect(tela, (255, 0 , 0), (595,120,5,480))
+    borda3 = pygame.draw.rect(tela, (255, 0 , 0), (0,595,600,5))
+    borda4 = pygame.draw.rect(tela, (255, 0 , 0), (0,120,5,475))
+    
+    tela.blit(grama, (0,120))
+
+    
+    mensagem = f'{pontos}'
+    recorde = f'{record}'
+    texto_formatado = fonte.render(mensagem, True, (0,0,255))
     texto2 = fonte.render(recorde,True, (0,0,255))
     
     for event in pygame.event.get():
@@ -108,22 +122,19 @@ while True:
     x_cobra = x_cobra + x_controle
     y_cobra = y_cobra + y_controle
         
-    cobra = pygame.draw.rect(tela, (255,255,0), (x_cobra,y_cobra,20,20))
+    cobra = pygame.draw.rect(tela, (180,90,0), (x_cobra-2.5,y_cobra-2.5,25,25))
     maca = pygame.draw.rect(tela, (0,0,0), (x_maca,y_maca,25,25))
     tela.blit(maça, (x_maca-7,y_maca-10))
-    borda1 = pygame.draw.rect(tela, (255, 0 , 0), (0,120,600,5))
-    borda2 = pygame.draw.rect(tela, (255, 0 , 0), (595,120,5,480))
-    borda3 = pygame.draw.rect(tela, (255, 0 , 0), (0,595,600,5))
-    borda4 = pygame.draw.rect(tela, (255, 0 , 0), (0,120,5,475))
+
     
     if cobra.colliderect(maca):
-        x_maca = randint(50, 550)
-        y_maca = randint(170, 550)
+        x_maca = randint(50, 520)
+        y_maca = randint(170, 520)
         pontos += 1
         barulho_colisao.play()
         i+=1
-        comprimento_inicial = comprimento_inicial + 1
-        velocidade+=0.25
+        comprimento_inicial+=1
+        velocidade+=0.2
         maça=pygame.image.load(imagens[i])
         maça=pygame.transform.scale(maça, (40,40))
         retmaça=maça.get_rect()
@@ -181,8 +192,8 @@ while True:
 
     aumenta_cobra(lista_cobra)
 
-    tela.blit(texto_formatado, (70,50))
-    tela.blit(texto2, (300,50))
+    tela.blit(texto_formatado, (470,17))
+    tela.blit(texto2, (540,73))
 
 
     
