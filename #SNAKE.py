@@ -55,7 +55,7 @@ def aumenta_cobra(lista_cobra):
         #XeY[0] = x
         #XeY[1] = y
 
-        pygame.draw.rect(tela, (180,90,0), (XeY[0], XeY[1], 20, 20))
+        pygame.draw.rect(tela, (247,132,17), (XeY[0], XeY[1], 20, 20))
 
 def reiniciar_jogo():
     global pontos, comprimento_inicial, x_cobra, y_cobra, lista_cobra, lista_cabeca, x_maca, y_maca, morreu
@@ -122,7 +122,7 @@ while True:
     x_cobra = x_cobra + x_controle
     y_cobra = y_cobra + y_controle
         
-    cobra = pygame.draw.rect(tela, (180,90,0), (x_cobra-2.5,y_cobra-2.5,25,25))
+    cobra = pygame.draw.rect(tela, (247,132,17), (x_cobra-2.5,y_cobra-2.5,25,25))
     maca = pygame.draw.rect(tela, (0,0,0), (x_maca,y_maca,25,25))
     tela.blit(maça, (x_maca-7,y_maca-10))
 
