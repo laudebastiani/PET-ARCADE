@@ -3,6 +3,7 @@ import pygame
 from pygame.locals import *
 from sys import exit
 from random import randint
+import time
 
 pygame.init()
 
@@ -28,6 +29,7 @@ y_maca = randint(170, 520)
 pontos = 0
 record = 0
 fonte = pygame.font.Font('ka1.ttf', 25, bold=True, italic=True)
+fontemenor = pygame.font.Font('ka1.ttf', 20, bold=True, italic=True)
 fonte2 = pygame.font.SysFont('arial', 20, True, True)
 
 tela = pygame.display.set_mode((largura, altura))
@@ -86,7 +88,7 @@ while True:
     mensagem = f'{pontos}'
     recorde = f'{record}'
     texto_formatado = fonte.render(mensagem, True, (0,0,255))
-    texto2 = fonte.render(recorde,True, (0,0,255))
+    texto2 = fontemenor.render(recorde,True, (255,0,0))
     
     for event in pygame.event.get():
         if event.type == QUIT:
@@ -123,7 +125,7 @@ while True:
     y_cobra = y_cobra + y_controle
         
     cobra = pygame.draw.rect(tela, (247,132,17), (x_cobra-2.5,y_cobra-2.5,25,25))
-    maca = pygame.draw.rect(tela, (0,0,0), (x_maca,y_maca,25,25))
+    maca = pygame.draw.rect(tela, (0,255,0), (x_maca,y_maca,25,25))
     tela.blit(maça, (x_maca-7,y_maca-10))
 
     
@@ -134,7 +136,8 @@ while True:
         barulho_colisao.play()
         i+=1
         comprimento_inicial+=1
-        velocidade+=0.2
+        if velocidade<=20:
+            velocidade+=0.2
         maça=pygame.image.load(imagens[i])
         maça=pygame.transform.scale(maça, (40,40))
         retmaça=maça.get_rect()
@@ -171,6 +174,7 @@ while True:
                         reiniciar_jogo()
                         
                         
+                        
                       
 
             ret_texto.center = (largura//2, altura//2) 
@@ -193,8 +197,10 @@ while True:
     aumenta_cobra(lista_cobra)
 
     tela.blit(texto_formatado, (470,17))
-    tela.blit(texto2, (540,73))
+    tela.blit(texto2, (545,75))
 
-
+    pygame.display.set_caption("PET ARCADE")
+    logo=pygame.image.load("logosite.png")
+    pygame.display.set_icon(logo)
     
     pygame.display.update()
