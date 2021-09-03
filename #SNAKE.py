@@ -84,6 +84,7 @@ def reiniciar_jogo():
     x_maca = randint(50, 520)
     y_maca = randint(170, 520)
     morreu = False
+    velocidade=10
 
 while True:
     relogio.tick(30)
@@ -186,7 +187,7 @@ while True:
         morreu = True
         while morreu:
             tela.fill((0,0,0))
-            velocidade=0
+            velocidade=10
 
             for event in pygame.event.get():
                 if event.type == QUIT:
