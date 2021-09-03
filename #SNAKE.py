@@ -19,7 +19,7 @@ altura = 600
 x_cobra = int(largura/2) 
 y_cobra = int(altura/2)
 
-velocidade = 10
+velocidade = 7
 x_controle = velocidade
 y_controle = 0
 
@@ -44,13 +44,19 @@ imagem1=pygame.image.load("lightning.png")
 imagem1= pygame.transform.scale(imagem1, (40, 40))
 maça=pygame.image.load(imagens[i])
 maça=pygame.transform.scale(maça, (40,40))
+
 headu=pygame.image.load('head_up.png')
 headd=pygame.image.load('head_down.png')
 headr=pygame.image.load('head_right.png')
 headl=pygame.image.load('head_left.png')
-corpo=pygame.image.load('corpo_snake.png')
-
 head=headr
+
+bodyr=pygame.image.load('body_right.png')
+bodyl=pygame.image.load('body_left.png')
+bodyu=pygame.image.load('body_up.png')
+bodyd=pygame.image.load('body_down.png')
+corpo=bodyr
+
 
 banner=pygame.image.load("banner.png")
 banner=pygame.transform.scale(banner, (600,120))
@@ -106,6 +112,7 @@ while True:
         if event.type == KEYDOWN:
             if event.key == K_LEFT:
                 head=headl
+                corpo=bodyl
                 if x_controle == velocidade:
                     pass
                 else:
@@ -113,6 +120,7 @@ while True:
                     y_controle = 0
             if event.key == K_RIGHT:
                 head=headr
+                corpo=bodyr
                 if x_controle == -velocidade:
                     pass
                 else:
@@ -120,6 +128,7 @@ while True:
                     y_controle = 0
             if event.key == K_UP:
                 head=headu
+                corpo=bodyu
                 if y_controle == velocidade:
                     pass
                 else:
@@ -127,6 +136,7 @@ while True:
                     x_controle = 0
             if event.key == K_DOWN:
                 head=headd
+                corpo=bodyd
                 if y_controle == -velocidade:
                     pass
                 else:
