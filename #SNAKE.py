@@ -29,7 +29,6 @@ y_maca = randint(170, 520)
 pontos = 0
 record = 0
 fonte = pygame.font.Font('ka1.ttf', 25, bold=True, italic=True)
-fontemenor = pygame.font.Font('ka1.ttf', 20, bold=True, italic=True)
 fonte2 = pygame.font.SysFont('arial', 20, True, True)
 
 tela = pygame.display.set_mode((largura, altura))
@@ -45,6 +44,13 @@ imagem1=pygame.image.load("lightning.png")
 imagem1= pygame.transform.scale(imagem1, (40, 40))
 maça=pygame.image.load(imagens[i])
 maça=pygame.transform.scale(maça, (40,40))
+headu=pygame.image.load('head_up.png')
+headd=pygame.image.load('head_down.png')
+headr=pygame.image.load('head_right.png')
+headl=pygame.image.load('head_left.png')
+corpo=pygame.image.load('corpo_snake.png')
+
+head=headr
 
 banner=pygame.image.load("banner.png")
 banner=pygame.transform.scale(banner, (600,120))
@@ -58,6 +64,8 @@ def aumenta_cobra(lista_cobra):
         #XeY[1] = y
 
         pygame.draw.rect(tela, (247,132,17), (XeY[0], XeY[1], 20, 20))
+        tela.blit(corpo, (XeY[0], XeY[1]))
+        tela.blit(head, (x_cobra-2.5,y_cobra-2.5))
 
 def reiniciar_jogo():
     global pontos, comprimento_inicial, x_cobra, y_cobra, lista_cobra, lista_cabeca, x_maca, y_maca, morreu
@@ -87,8 +95,8 @@ while True:
     
     mensagem = f'{pontos}'
     recorde = f'{record}'
-    texto_formatado = fonte.render(mensagem, True, (0,0,255))
-    texto2 = fontemenor.render(recorde,True, (255,0,0))
+    texto_formatado = fonte.render(mensagem, True, (0,50,0))
+    texto2 = fonte.render(recorde,True, (255,0,0))
     
     for event in pygame.event.get():
         if event.type == QUIT:
@@ -97,24 +105,28 @@ while True:
         
         if event.type == KEYDOWN:
             if event.key == K_LEFT:
+                head=headl
                 if x_controle == velocidade:
                     pass
                 else:
                     x_controle = -velocidade
                     y_controle = 0
             if event.key == K_RIGHT:
+                head=headr
                 if x_controle == -velocidade:
                     pass
                 else:
                     x_controle = velocidade
                     y_controle = 0
             if event.key == K_UP:
+                head=headu
                 if y_controle == velocidade:
                     pass
                 else:
                     y_controle = -velocidade
                     x_controle = 0
             if event.key == K_DOWN:
+                head=headd
                 if y_controle == -velocidade:
                     pass
                 else:
@@ -128,7 +140,7 @@ while True:
     maca = pygame.draw.rect(tela, (0,255,0), (x_maca,y_maca,25,25))
     tela.blit(maça, (x_maca-7,y_maca-10))
 
-    
+
     if cobra.colliderect(maca):
         x_maca = randint(50, 520)
         y_maca = randint(170, 520)
@@ -151,6 +163,7 @@ while True:
     lista_cabeca.append(x_cobra)
     lista_cabeca.append(y_cobra)
     
+    
     lista_cobra.append(lista_cabeca)
 
     if (lista_cobra.count(lista_cabeca) > 1) or cobra.colliderect(borda1) or cobra.colliderect(borda2) or cobra.colliderect(borda3) or cobra.colliderect(borda4):
@@ -163,7 +176,7 @@ while True:
         morreu = True
         while morreu:
             tela.fill((0,0,0))
-            velocidade=10
+            velocidade=0
 
             for event in pygame.event.get():
                 if event.type == QUIT:
@@ -196,8 +209,8 @@ while True:
 
     aumenta_cobra(lista_cobra)
 
-    tela.blit(texto_formatado, (470,17))
-    tela.blit(texto2, (545,75))
+    tela.blit(texto_formatado, (450,17))
+    tela.blit(texto2, (530,72))
 
     pygame.display.set_caption("PET ARCADE")
     logo=pygame.image.load("logosite.png")
