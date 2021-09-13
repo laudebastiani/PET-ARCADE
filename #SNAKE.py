@@ -1,4 +1,3 @@
-#SNAKE
 import pygame
 from pygame.locals import *
 from sys import exit
@@ -16,10 +15,10 @@ barulho_perdeu = pygame.mixer.Sound('fireball.wav')
 largura = 600
 altura = 600
 
-x_cobra = int(largura/2) 
-y_cobra = int(altura/2)
+x_cobra = int(300) 
+y_cobra = int(360)
 
-velocidade = 7
+velocidade = 11.5
 x_controle = velocidade
 y_controle = 0
 
@@ -84,7 +83,7 @@ def reiniciar_jogo():
     x_maca = randint(50, 520)
     y_maca = randint(170, 520)
     morreu = False
-    velocidade=10
+    velocidade=7
 
 while True:
     relogio.tick(30)
@@ -159,8 +158,6 @@ while True:
         barulho_colisao.play()
         i+=1
         comprimento_inicial+=1
-        if velocidade<=20:
-            velocidade+=0.2
         maça=pygame.image.load(imagens[i])
         maça=pygame.transform.scale(maça, (40,40))
         retmaça=maça.get_rect()
@@ -187,7 +184,7 @@ while True:
         morreu = True
         while morreu:
             tela.fill((0,0,0))
-            velocidade=10
+            velocidade=7
 
             for event in pygame.event.get():
                 if event.type == QUIT:
