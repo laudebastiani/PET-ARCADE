@@ -39,6 +39,7 @@ morreu = False
 
 imagens=["lightning.png", "gears.png", "calculus2.png", "calculus.png", "atom.png", "magnet.png", "motherboard.png", "coding.png", "graduation.png", "logosite.png"]
 i=0
+
 imagem1=pygame.image.load("lightning.png")
 imagem1= pygame.transform.scale(imagem1, (40, 40))
 maça=pygame.image.load(imagens[i])
