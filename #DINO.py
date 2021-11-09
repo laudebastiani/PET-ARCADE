@@ -25,7 +25,7 @@ tela = pygame.display.set_mode((LARGURA, ALTURA))
 
 pygame.display.set_caption('PET ARCADE')
 
-fundo = pygame.image.load(os.path.join(diretorio_imagens, 'fundo2.png'))
+fundo = pygame.image.load(os.path.join(diretorio_imagens, 'fundo.png'))
 
 banner = pygame.image.load(os.path.join(diretorio_imagens, 'banner.png'))
 banner = pygame.transform.scale(banner, (600,120))
